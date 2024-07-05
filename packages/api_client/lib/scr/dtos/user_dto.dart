@@ -29,20 +29,22 @@ class UserDTO {
 
   factory UserDTO.fromJson(Json json) => _$UserDTOFromJson(json);
 
-  // Future<int> getFollowersCounts(String url) async {
-  //   final response = await dio.get(url);
+  Future<int> getCountsFromUrl(String url) async {
+    final response = await dio.get(url);
 
-  //   final listJson = List.castFrom<dynamic, Json>(response.data);
+    final listJson = List.castFrom<dynamic, Json>(response.data);
 
-  //   return listJson.length;
-  // }
+    if (listJson.isNotEmpty) return listJson.length;
 
-  User toEntity() {
+    return 0;
+  }
+
+  Future<User> toEntity() async {
     return User(
       avatarUrl: avatarUrl,
       name: name,
-      followers: 1,
-      following: 2,
+      followers: await getCountsFromUrl(followersUrl),
+      following: await getCountsFromUrl(followingUrl),
     );
   }
 }

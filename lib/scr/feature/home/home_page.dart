@@ -1,4 +1,4 @@
-import 'package:api_client/scr/providers/get_users_provider/users_provider.dart';
+import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -18,17 +18,22 @@ class _HomePageState extends State<HomePage> {
   final _foo = UsersRepositoryImpl(provider: ApiUsersProvider());
 
   Future<void> _incrementCounter() async {
-    final response = await dio.get('https://api.github.com/users');
+    // final response = await dio.get('https://api.github.com/users');
 
-    // //     headers: {
-    // //   'X-GitHub-Api-Version': '2022-11-28'
-    // // }
+    // final response = await dio.get('https://jsonplaceholder.typicode.com/users');
 
-    print(response.data);
+    // // return response.data;
+    // final listJson = List.castFrom<dynamic, Map<String, Object?>>(response.data);
 
-    // final List<User> one = await _foo.getUsers();
+    // // // //     headers: {
+    // // // //   'X-GitHub-Api-Version': '2022-11-28'
+    // // // // }
 
-    // print(one[0].name);
+    // print(listJson.length);
+
+    final List<User> one = await _foo.getUsers();
+
+    print('count: ${one[0].followers}');
   }
 
   @override
