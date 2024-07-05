@@ -8,9 +8,17 @@ environment:
   sdk: '>=3.3.3 <4.0.0'
 
 dependencies:
+# Modules
+  core:
+    path: packages/core
+  api_client:
+    path: packages/api_client
+
+
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
+  dio: 5.5.0+1
 
 dev_dependencies:
   flutter_test:

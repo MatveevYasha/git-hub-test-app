@@ -1,19 +1,31 @@
 name: api_client
 description: "Api client"
 version: 0.0.1
+publish_to: none
 
 environment:
   sdk: '>=3.3.3 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
+  # Modules
+  core:
+    path: ../core
+
   flutter:
     sdk: flutter
+    # Networking
+  dio: 5.5.0+1
+    # Models
+  json_annotation: 4.9.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  # Code generation
+  build_runner: 2.4.9
+  json_serializable: 6.8.0
 
 flutter:
 

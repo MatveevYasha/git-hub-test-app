@@ -4,8 +4,6 @@ typedef UserId = int;
 
 @immutable
 class User {
-  final UserId? id;
-
   final String avatarUrl;
   final String name;
   final int followers;
@@ -16,19 +14,17 @@ class User {
     required this.name,
     required this.followers,
     required this.following,
-    this.id,
   });
 
   @override
-  int get hashCode => Object.hashAll([id, avatarUrl, name, followers, following]);
+  int get hashCode => Object.hashAll([avatarUrl, name, followers, following]);
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! User) return false;
 
-    return other.id == id &&
-        other.avatarUrl == avatarUrl &&
+    return other.avatarUrl == avatarUrl &&
         other.name == name &&
         other.followers == followers &&
         other.following == following;
