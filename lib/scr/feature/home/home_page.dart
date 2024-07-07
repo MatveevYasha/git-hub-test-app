@@ -1,68 +1,25 @@
-import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:git_hub_test_app/scr/feature/home/data/users_repository.dart';
-
-final dio = Dio();
+import 'package:git_hub_test_app/scr/feature/home/widgets/user_card.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final List<User> users;
+
+  const HomePage({super.key, required this.users});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  final _counter = 0;
-  final _foo = UsersRepositoryImpl(provider: ApiUsersProvider());
-
-  Future<void> _incrementCounter() async {
-    // final response = await dio.get('https://api.github.com/users');
-
-    // final response = await dio.get('https://jsonplaceholder.typicode.com/users');
-
-    // // return response.data;
-    // final listJson = List.castFrom<dynamic, Map<String, Object?>>(response.data);
-
-    // // // //     headers: {
-    // // // //   'X-GitHub-Api-Version': '2022-11-28'
-    // // // // }
-
-    // print(listJson.length);
-
-    final List<User> one = await _foo.getUsers();
-
-    print('1: ${one[0].name}');
-    print('2: ${one[0].followers}');
-    print('3: ${one[0].following}');
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+    return ListView.separated(
+      itemCount: widget.users.length,
+      separatorBuilder: (context, index) => const Divider(),
+      itemBuilder: (context, index) {
+        return UserCard(user: widget.users[index]);
+      },
     );
   }
 }
