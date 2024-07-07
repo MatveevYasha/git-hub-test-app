@@ -33,7 +33,9 @@ class _HomePageState extends State<HomePage> {
 
     final List<User> one = await _foo.getUsers();
 
-    print('count: ${one[0].followers}');
+    print('1: ${one[0].name}');
+    print('2: ${one[0].followers}');
+    print('3: ${one[0].following}');
   }
 
   @override

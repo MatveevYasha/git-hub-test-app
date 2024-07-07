@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:core/core.dart';
 
@@ -7,26 +5,26 @@ import '../../dtos/user_dto.dart';
 
 final dio = Dio();
 
+const String apiKey = String.fromEnvironment('API_KEY');
+
 class ApiUsersProvider implements UsersProvider {
   @override
   Future<List<User>> getUsers() async {
-    final response = await dio.get('https://api.github.com/users');
+    dio.options.headers['Accept'] = 'application/vnd.github+json';
+    dio.options.headers['Authorization'] = 'Bearer $apiKey';
+    dio.options.headers['X-GitHub-Api-Version'] = '2022-11-28';
 
-    // final foo = response.data;
+    final response = await dio.get('https://api.github.com/users');
 
     final List<User> list = [];
 
     final listJson = List.castFrom<dynamic, Json>(response.data);
-
-    // final list = listJson.map((e) => UserDTO.fromJson(e).toEntity()).toList();
 
     for (var user in listJson) {
       final foo = await UserDTO.fromJson(user).toEntity();
 
       list.add(foo);
     }
-
-    // return [User(avatarUrl: 'avatarUrl', name: '11', followers: 1, following: 1)];
 
     return list;
   }

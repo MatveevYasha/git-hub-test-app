@@ -17,7 +17,7 @@ class UserDTO {
   @JsonKey(name: 'followers_url')
   final String followersUrl;
 
-  @JsonKey(name: 'following_url')
+  @JsonKey(name: 'subscriptions_url')
   final String followingUrl;
 
   const UserDTO({
@@ -30,6 +30,10 @@ class UserDTO {
   factory UserDTO.fromJson(Json json) => _$UserDTOFromJson(json);
 
   Future<int> getCountsFromUrl(String url) async {
+    dio.options.headers['Accept'] = 'application/vnd.github+json';
+    dio.options.headers['Authorization'] = 'Bearer $apiKey';
+    dio.options.headers['X-GitHub-Api-Version'] = '2022-11-28';
+
     final response = await dio.get(url);
 
     final listJson = List.castFrom<dynamic, Json>(response.data);
