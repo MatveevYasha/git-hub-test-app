@@ -18,12 +18,10 @@ class GitHubApp extends StatelessWidget {
       create: (context) =>
           HomeBloc(repository: UsersRepositoryImpl(provider: ApiUsersProvider()))..add(InitialHomeEvent()),
       child: MaterialApp(
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: Scaffold(
-          body: BlocBuilder<HomeBloc, HomeState>(
+        theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple), useMaterial3: true),
+        debugShowCheckedModeBanner: false,
+        home: Material(
+          child: BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
               return switch (state) {
                 LoadingHomeState() => const LoadingWidget(),

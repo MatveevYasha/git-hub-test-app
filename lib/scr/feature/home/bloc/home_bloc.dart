@@ -13,6 +13,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeEvent>(
       (event, emit) => switch (event) {
         final InitialHomeEvent event => _initial(event, emit),
+        final SearchHomeEvent event => _search(event, emit),
       },
     );
   }
@@ -22,6 +23,20 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       final List<User> users = await _repository.getUsers();
 
       emit(SuccessHomeState(users: users));
+    } on Exception catch (_) {
+      emit(ErrorHomeState());
+    }
+  }
+
+  Future<void> _search(SearchHomeEvent event, Emitter<HomeState> emit) async {
+    try {
+      emit(LoadingHomeState());
+
+      final List<User> users = await _repository.getUsers();
+
+      final List<User> sortUsers = users.where((user) => user.name.contains(event.searchString)).toList();
+
+      emit(SuccessHomeState(users: sortUsers));
     } on Exception catch (_) {
       emit(ErrorHomeState());
     }

@@ -31,7 +31,7 @@ class UserDTO {
 
   Future<int> getCountsFromUrl(String url) async {
     dio.options.headers['Accept'] = 'application/vnd.github+json';
-    dio.options.headers['Authorization'] = 'Bearer _';
+    dio.options.headers['Authorization'] = 'Bearer $apiKey';
     dio.options.headers['X-GitHub-Api-Version'] = '2022-11-28';
 
     final response = await dio.get(url);
